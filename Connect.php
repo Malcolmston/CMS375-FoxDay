@@ -41,9 +41,9 @@ class Connect
           name VARCHAR(30) NOT NULL,
           year enum('1','2','3','4') NOT NULL default '1',  
           email VARCHAR(50) NOT NULL UNIQUE,
-          created DATETIME DEFAULT CURRENT_TIMESTAMP,
-          updated DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-          deleted DATETIME DEFAULT NULL 
+          createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+          updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+          deletedAt DATETIME DEFAULT NULL 
         );
         ";
 
