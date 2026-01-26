@@ -6,16 +6,33 @@ class Connect
     public $error;
     public function __construct()
     {
-        $host = getenv('DB_HOST') ?: 'localhost';
-        $dbName = getenv('DB_NAME') ?: 'foxday';
-        $user = getenv('DB_USER') ?: 'admin';
-        $pass = getenv('DB_PASS') ?: 'admin';
         try {
-            $this->db = new PDO("mysql:host={$host};dbname={$dbName}", $user, $pass);
+            $host = $this->getEnvValue('DB_HOST', 'localhost');
+            $dbName = $this->getEnvValue('DB_NAME', 'foxday');
+            $user = $this->getEnvValue('DB_USER', 'admin');
+            $pass = $this->getEnvValue('DB_PASS', 'admin');
+            $dsn = "mysql:host={$host};dbname={$dbName};charset=utf8mb4";
+            $this->db = new PDO($dsn, $user, $pass, [
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                PDO::ATTR_EMULATE_PREPARES => false,
+            ]);
             $this->createEventTable()->createUserTable()->createUserReq()->createUserReq();
         } catch (PDOException $e) {
             $this->error = 'Database connection failed: ' . $e->getMessage();
         }
+    }
+
+    private function getEnvValue($key, $default)
+    {
+        if (isset($_ENV[$key]) && $_ENV[$key] !== '') {
+            return $_ENV[$key];
+        }
+        if (isset($_SERVER[$key]) && $_SERVER[$key] !== '') {
+            return $_SERVER[$key];
+        }
+        $value = getenv($key);
+        return ($value !== false && $value !== '') ? $value : $default;
     }
 
     private function createEventTable()
