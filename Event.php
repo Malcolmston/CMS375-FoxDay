@@ -1,6 +1,7 @@
 <?php
-
 require_once 'Connect.php';
+
+$EVENTS = "events.json";
 
 class Event extends Connect
 {
@@ -8,6 +9,21 @@ class Event extends Connect
     private $title;
     private $date;
     private $description;
+
+    private static function getEventsFromFile()
+    {
+        global $EVENTS;
+        $events = json_decode(file_get_contents($EVENTS), true);
+        if (!$events) {
+            return [];
+        }
+
+        foreach($events as &$event) {
+            $event['date'] = date('Y-m-d', strtotime($event['date']));
+        }
+
+        return $events;
+    }
 
     /**
      * Retrieves the title.
@@ -237,12 +253,7 @@ class Event extends Connect
         if ($this->hasAnyEvents()) {
             return;
         }
-        $events = [
-            ['title' => 'Event 1', 'date' => '2023-10-01', 'description' => 'Description for Event 1'],
-            ['title' => 'Event 2', 'date' => '2023-10-02', 'description' => 'Description for Event 2'],
-            ['title' => 'Event 3', 'date' => '2023-10-03', 'description' => 'Description for Event 3'],
-            ['title' => 'Event 4', 'date' => '2023-10-04', 'description' => 'Description for Event 4'],
-        ];
+        $events = self::getEventsFromFile();
 
         foreach($events as $event) {
             $this->addEvent($event['title'], $event['date'], $event['description']);
