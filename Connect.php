@@ -76,6 +76,16 @@ class Connect
         return $this;
     }
 
+    public function getDb()
+    {
+        return $this->db;
+    }
+
+    public function getError()
+    {
+        return $this->error;
+    }
+
     public function __destruct()
     {
         $this->db = null;
