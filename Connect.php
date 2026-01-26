@@ -119,6 +119,22 @@ class Connect
         }
     }
 
+    public function addUserEvent($user_id, $event_id)
+    {
+        try {
+            $sql = "INSERT INTO user_requests (user_id, event_id) VALUES (:user_id, :event_id)";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(':user_id', $user_id);
+            $stmt->bindParam(':event_id', $event_id);
+            $stmt->execute();
+            return $this->db->lastInsertId();
+        } catch (PDOException $e) {
+            $this->error = 'Failed to add user event: ' . $e->getMessage();
+            return false;
+        }
+
+    }
+
     public function __destruct()
     {
         $this->db = null;
