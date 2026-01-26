@@ -2,44 +2,100 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Register • Fox Day</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="talwind.config.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
-<body>
+<body class="font-display">
+<div class="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 text-slate-100">
+    <div class="mx-auto max-w-5xl px-6 py-12 lg:grid lg:grid-cols-[1.1fr_0.9fr] lg:gap-12 lg:py-16">
+        <section class="space-y-6">
+            <div class="inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-500/10 px-4 py-1 text-sm font-medium text-blue-100">
+                <span class="h-2 w-2 rounded-full bg-blue-400"></span>
+                Fox Day Registration
+            </div>
+            <h1 class="text-4xl font-semibold leading-tight text-white sm:text-5xl">
+                Save your spot for campus events.
+            </h1>
+            <p class="max-w-xl text-base text-slate-300">
+                Pick your event, share a quick note, and we’ll confirm your registration. You can update your
+                preferences anytime.
+            </p>
+            <div class="grid gap-4 sm:grid-cols-2">
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-5">
+                    <p class="text-sm text-slate-300">Location</p>
+                    <p class="mt-2 text-lg font-semibold text-white">Breezeway Plaza</p>
+                    <p class="mt-1 text-sm text-slate-400">Meet by the amphitheater</p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 p-5">
+                    <p class="text-sm text-slate-300">Date</p>
+                    <p class="mt-2 text-lg font-semibold text-white">Spring term</p>
+                    <p class="mt-1 text-sm text-slate-400">Final schedule posted soon</p>
+                </div>
+            </div>
+        </section>
 
+        <section class="mt-10 lg:mt-0">
+            <form action="process.php" method="post" class="rounded-3xl border border-white/10 bg-white/5 p-6 shadow-2xl shadow-blue-500/10 backdrop-blur">
+                <div class="space-y-6">
+                    <div>
+                        <label for="student-name" class="block text-sm font-medium text-slate-200">Student name</label>
+                        <input type="text" name="student-name" id="student-name" required
+                               placeholder="Jordan Rivera"
+                               class="mt-2 w-full rounded-xl border border-white/10 bg-slate-950/60 px-4 py-3 text-sm text-white placeholder:text-slate-500 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
+                    </div>
 
-<form action="process.php" method="post">
-    <label for="student-name">Student name</label>
-    <input type="text" name="student-name" id="student-name" required>
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-slate-200">Email</label>
+                        <input type="email" name="email" id="email" required
+                               placeholder="jordan@school.edu"
+                               class="mt-2 w-full rounded-xl border border-white/10 bg-slate-950/60 px-4 py-3 text-sm text-white placeholder:text-slate-500 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
+                    </div>
 
-    <label for="email">Email</label>
-    <input type="email" name="email" id="email" required>
+                    <div class="grid gap-4 sm:grid-cols-2">
+                        <div>
+                            <label for="event" class="block text-sm font-medium text-slate-200">Event</label>
+                            <select name="event" id="event" required
+                                    class="mt-2 w-full rounded-xl border border-white/10 bg-slate-950/60 px-4 py-3 text-sm text-white focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
+                                <option value="">Select an event</option>
+                                <option value="1">Fox Day</option>
+                                <option value="2">Fox Day 2</option>
+                                <option value="3">Fox Day 3</option>
+                                <option value="4">Fox Day 4</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="year" class="block text-sm font-medium text-slate-200">Year</label>
+                            <select name="year" id="year" required
+                                    class="mt-2 w-full rounded-xl border border-white/10 bg-slate-950/60 px-4 py-3 text-sm text-white focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
+                                <option value="">Select a year</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                            </select>
+                        </div>
+                    </div>
 
-    <label for="event">Event</label>
-    <select name="event" id="event" required>
-        <option value="">Select an event</option>
-        <option value="1">Fox Day</option>
-        <option value="2">Fox Day 2</option>
-        <option value="3">Fox Day 3</option>
-        <option value="4">Fox Day 4</option>
-    </select>
+                    <div>
+                        <label for="message" class="block text-sm font-medium text-slate-200">Message</label>
+                        <textarea name="message" id="message" rows="4" required
+                                  placeholder="Let us know if you have accessibility needs or questions."
+                                  class="mt-2 w-full rounded-xl border border-white/10 bg-slate-950/60 px-4 py-3 text-sm text-white placeholder:text-slate-500 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/40"></textarea>
+                    </div>
 
-    <label for="year">Year</label>
-
-    <select name="year" id="year" required>
-        <option value="">Select a year</option>
-        <option value="1">freshman</option>
-        <option value="2">soph</option>
-        <option value="3">junior</option>
-        <option value="4">senior</option>
-    </select>
-
-    <label for="message">Message</label>
-    <textarea name="message" id="message"></textarea>
-
-
-    <input type="submit" value="Register">
-
-</form>
-
+                    <button type="submit"
+                            class="w-full rounded-xl bg-blue-500 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-500/30 transition hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-300/60">
+                        Register
+                    </button>
+                </div>
+            </form>
+        </section>
+    </div>
+</div>
 </body>
 </html>
