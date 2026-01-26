@@ -2,7 +2,7 @@
 
 class Connect
 {
-    private $db;
+    protected $db;
     public $error;
     public function __construct()
     {
@@ -86,78 +86,6 @@ class Connect
         return $this->error;
     }
 
-    public function addEvent($title, $date, $description)
-    {
-        try {
-        $sql = "INSERT INTO events (title, date, description) VALUES (:title, :date, :description)";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bindParam(':title', $title);
-        $stmt->bindParam(':date', $date);
-        $stmt->bindParam(':description', $description);
-        $stmt->execute();
-
-        return $this->db->lastInsertId();
-        } catch (PDOException $e) {
-            $this->error = 'Failed to add event: ' . $e->getMessage();
-            return false;
-        }
-    }
-
-    public function addUser($name, $year, $email)
-    {
-        try {
-            $sql = "INSERT INTO users (name, year, email) VALUES (:name, :year, :email)";
-            $stmt = $this->db->prepare($sql);
-            $stmt->bindParam(':name', $name);
-            $stmt->bindParam(':year', $year);
-            $stmt->bindParam(':email', $email);
-            $stmt->execute();
-            return $this->db->lastInsertId();
-        } catch (PDOException $e) {
-            $this->error = 'Failed to add user: ' . $e->getMessage();
-            return false;
-        }
-    }
-
-    private function addUserEvent($user_id, $event_id)
-    {
-        try {
-            $sql = "INSERT INTO user_requests (user_id, event_id) VALUES (:user_id, :event_id)";
-            $stmt = $this->db->prepare($sql);
-            $stmt->bindParam(':user_id', $user_id);
-            $stmt->bindParam(':event_id', $event_id);
-            $stmt->execute();
-            return $this->db->lastInsertId();
-        } catch (PDOException $e) {
-            $this->error = 'Failed to add user event: ' . $e->getMessage();
-            return false;
-        }
-
-    }
-
-    public function getEvents()
-    {
-        $sql = "SELECT * FROM events";
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    }
-
-    private function initEvents()
-    {
-        $events = [
-            ['title' => 'Event 1', 'date' => '2023-10-01', 'description' => 'Description for Event 1'],
-            [ 'title' => 'Event 2', 'date' => '2023-10-02', 'description' => 'Description for Event 2'],
-            [ 'title' => 'Event 3', 'date' => '2023-10-03', 'description' => 'Description for Event 3'],
-            [ 'title' => 'Event 4', 'date' => '2023-10-04', 'description' => 'Description for Event 4'],
-        ];
-
-        foreach($events as $event) {
-            $this->addEvent($event['title'], $event['date'], $event['description']);
-        }
-
-    }
 
     public function __destruct()
     {
