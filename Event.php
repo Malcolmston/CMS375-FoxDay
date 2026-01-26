@@ -9,21 +9,45 @@ class Event extends Connect
     private $date;
     private $description;
 
+    /**
+     * Retrieves the title.
+     *
+     * @return string|null The title if set, or null if not.
+     */
     public function getTitle()
     {
         return $this->title;
     }
 
+    /**
+     * Retrieves the date property.
+     *
+     * @return mixed The value of the date property.
+     */
     public function getDate()
     {
         return $this->date;
     }
 
+    /**
+     * Retrieves the description associated with the current instance.
+     *
+     * @return string|null The description, or null if no description is set.
+     */
     public function getDescription()
     {
         return $this->description;
     }
 
+    /**
+     * Constructor method for the class.
+     *
+     * @param string|null $title The title of the entity, default is null.
+     * @param string|null $date The date associated with the entity, default is null.
+     * @param string|null $description A description of the entity, default is null.
+     *
+     * @return void
+     */
     public function __construct($title = null, $date = null, $description = null)
     {
         parent::__construct();
@@ -34,6 +58,12 @@ class Event extends Connect
         $this->description = $description;
     }
 
+    /**
+     * Retrieves an event from the database based on the given event ID.
+     *
+     * @param int $id The unique identifier of the event to be retrieved.
+     * @return Event|null Returns an Event object if found, or null if no event is found or the database connection fails.
+     */
     public static function getEvent($id)
     {
         $connect = new Connect();
@@ -57,12 +87,24 @@ class Event extends Connect
         return null;
     }
 
+    /**
+     * Initializes an event based on the given ID.
+     *
+     * @param mixed $id The identifier of the event to initialize.
+     * @return Event Returns the event associated with the given ID, or a new Event instance if no event is found.
+     */
     public static function initEvent($id)
     {
         $event = self::getEvent($id);
         return $event ?: new Event();
     }
 
+    /**
+     * Checks if an event with the given title exists in the database.
+     *
+     * @param string|null $title The title of the event to check. If null, the method will use the object's title property.
+     * @return bool True if the event exists, false otherwise.
+     */
     public function hasEvent($title = null)
     {
         if ($title === null) {
@@ -78,6 +120,11 @@ class Event extends Connect
         return (bool) $stmt->fetchColumn();
     }
 
+    /**
+     * Retrieves all events from the database.
+     *
+     * @return array An array of Event objects, or an empty array if the database connection fails or no events are available.
+     */
     public static function getEvents()
     {
         $connect = new Connect();
@@ -100,6 +147,15 @@ class Event extends Connect
         return $events;
     }
 
+    /**
+     * Updates an existing event in the database with new values for title, date, and description.
+     *
+     * @param int $id The ID of the event to be updated.
+     * @param string $title The new title for the event.
+     * @param string $date The new date for the event in YYYY-MM-DD format.
+     * @param string $description The new description for the event.
+     * @return bool Returns true on successful update, false otherwise.
+     */
     public function updateEvent($id, $title, $date, $description)
     {
         $sql = "UPDATE events SET title = :title, date = :date, description = :description WHERE id = :id";
@@ -110,17 +166,37 @@ class Event extends Connect
         $stmt->bindParam(':description', $description);
         return $stmt->execute();
     }
+
+    /**
+     * Retrieves the ID of the current instance.
+     *
+     * @return mixed The ID of the instance.
+     */
     public function getId()
     {
         return $this->id;
     }
 
+    /**
+     * Sets the ID value.
+     *
+     * @param mixed $id The ID to set.
+     * @return self Returns the current instance.
+     */
     public function setId($id)
     {
         $this->id = $id;
         return $this;
     }
 
+    /**
+     * Adds a new event to the database.
+     *
+     * @param string $title The title of the event.
+     * @param string $date The date of the event in YYYY-MM-DD format.
+     * @param string $description The description of the event.
+     * @return int|false The ID of the newly inserted event on success, or false on failure.
+     */
     public function addEvent($title, $date, $description)
     {
         try {
@@ -138,6 +214,11 @@ class Event extends Connect
         }
     }
 
+    /**
+     * Checks if there are any events in the database.
+     *
+     * @return bool True if there are events, false otherwise.
+     */
     private function hasAnyEvents()
     {
         $sql = "SELECT COUNT(*) FROM events";
@@ -146,6 +227,11 @@ class Event extends Connect
         return (int) $stmt->fetchColumn() > 0;
     }
 
+    /**
+     * Initializes predefined events if none have been added yet.
+     *
+     * @return void
+     */
     private function initEvents()
     {
         if ($this->hasAnyEvents()) {
