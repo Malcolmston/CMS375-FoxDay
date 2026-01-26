@@ -29,10 +29,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    if($year) {
-        if($year < 1 || $year > 4) {
-            $errors[] = 'Please select a valid year';
-        }
+    if(!$year) {
+        $errors[] = 'Please select a year';
+    } elseif($year < 1 || $year > 4) {
+        $errors[] = 'Please select a valid year';
     }
 
     if(!$errors) {
@@ -42,7 +42,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $errors[] = $user->getError();
         }
 
-        $user->addEvent($evt);
+        if (!$errors) {
+            $user->addEvent($evt);
+        }
     }
 }
 ?>
