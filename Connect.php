@@ -119,7 +119,7 @@ class Connect
         }
     }
 
-    public function addUserEvent($user_id, $event_id)
+    private function addUserEvent($user_id, $event_id)
     {
         try {
             $sql = "INSERT INTO user_requests (user_id, event_id) VALUES (:user_id, :event_id)";
@@ -132,6 +132,15 @@ class Connect
             $this->error = 'Failed to add user event: ' . $e->getMessage();
             return false;
         }
+
+    }
+
+    public function getEvents()
+    {
+        $sql = "SELECT * FROM events";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     }
 
