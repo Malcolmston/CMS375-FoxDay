@@ -1,5 +1,7 @@
 <?php
 
+require_once 'Connect.php';
+
 class Event extends Connect
 {
     private $id;
@@ -7,7 +9,7 @@ class Event extends Connect
     private $date;
     private $description;
 
-    public function __construct($title, $date, $description = null)
+    public function __construct($title = null, $date = null, $description = null)
     {
         parent::__construct();
         $this->initEvents();
@@ -17,16 +19,17 @@ class Event extends Connect
         $this->description = $description;
     }
 
-    public function getEvent($id)
+    public static function getEvent($id)
     {
+        $connect = new Connect();
         $sql = "SELECT * FROM events WHERE id = :id";
-        $stmt = $this->db->prepare($sql);
+        $stmt = $connect->db->prepare($sql);
         $stmt->bindParam(':id', $id);
         $stmt->execute();
         $data = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($data) {
-            $e =  new Event($data['title'], $data['date'], $data['description']);
+            $e = new Event($data['title'], $data['date'], $data['description']);
             $e->id = $data['id'];
 
             return $e;
@@ -34,8 +37,21 @@ class Event extends Connect
 
         return null;
     }
-    public function hasEvent($title)
+
+    public static function initEvent($id)
     {
+        $event = self::getEvent($id);
+        return $event ?: new Event();
+    }
+
+    public function hasEvent($title = null)
+    {
+        if ($title === null) {
+            $title = $this->title;
+        }
+        if ($title === null || $title === '') {
+            return false;
+        }
         $sql = "SELECT COUNT(*) FROM events WHERE title = :title";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':title', $title);
@@ -43,10 +59,11 @@ class Event extends Connect
         return (bool) $stmt->fetchColumn();
     }
 
-    public function getEvents()
+    public static function getEvents()
     {
+        $connect = new Connect();
         $sql = "SELECT * FROM events";
-        $stmt = $this->db->prepare($sql);
+        $stmt = $connect->db->prepare($sql);
         $stmt->execute();
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -70,6 +87,17 @@ class Event extends Connect
         $stmt->bindParam(':description', $description);
         return $stmt->execute();
     }
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function setId($id)
+    {
+        $this->id = $id;
+        return $this;
+    }
+
     public function addEvent($title, $date, $description)
     {
         try {
@@ -87,13 +115,24 @@ class Event extends Connect
         }
     }
 
+    private function hasAnyEvents()
+    {
+        $sql = "SELECT COUNT(*) FROM events";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        return (int) $stmt->fetchColumn() > 0;
+    }
+
     private function initEvents()
     {
+        if ($this->hasAnyEvents()) {
+            return;
+        }
         $events = [
-            ['title' => 'Event 1', 'date' => DATE('2023-10-01'), 'description' => 'Description for Event 1'],
-            ['title' => 'Event 2', 'date' => DATE('2023-10-02'), 'description' => 'Description for Event 2'],
-            ['title' => 'Event 3', 'date' => DATE('2023-10-03'), 'description' => 'Description for Event 3'],
-            ['title' => 'Event 4', 'date' => DATE('2023-10-04'), 'description' => 'Description for Event 4'],
+            ['title' => 'Event 1', 'date' => '2023-10-01', 'description' => 'Description for Event 1'],
+            ['title' => 'Event 2', 'date' => '2023-10-02', 'description' => 'Description for Event 2'],
+            ['title' => 'Event 3', 'date' => '2023-10-03', 'description' => 'Description for Event 3'],
+            ['title' => 'Event 4', 'date' => '2023-10-04', 'description' => 'Description for Event 4'],
         ];
 
         foreach($events as $event) {
