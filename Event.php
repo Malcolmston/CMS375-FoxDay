@@ -22,8 +22,12 @@ class Event extends Connect
     public static function getEvent($id)
     {
         $connect = new Connect();
+        $db = $connect->getDb();
+        if (!$db) {
+            return null;
+        }
         $sql = "SELECT * FROM events WHERE id = :id";
-        $stmt = $connect->db->prepare($sql);
+        $stmt = $db->prepare($sql);
         $stmt->bindParam(':id', $id);
         $stmt->execute();
         $data = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -62,8 +66,12 @@ class Event extends Connect
     public static function getEvents()
     {
         $connect = new Connect();
+        $db = $connect->getDb();
+        if (!$db) {
+            return [];
+        }
         $sql = "SELECT * FROM events";
-        $stmt = $connect->db->prepare($sql);
+        $stmt = $db->prepare($sql);
         $stmt->execute();
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
