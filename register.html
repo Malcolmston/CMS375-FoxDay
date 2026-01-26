@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Register • Fox Day</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="talwind.config.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/2333bf7b7a.js" crossorigin="anonymous"></script>
+    <script src="talwind.config.js"></script>
 </head>
 <body class="font-display">
 <div class="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 text-slate-100">
@@ -43,14 +44,14 @@
             <form action="process.php" method="post" class="rounded-3xl border border-white/10 bg-white/5 p-6 shadow-2xl shadow-blue-500/10 backdrop-blur">
                 <div class="space-y-6">
                     <div>
-                        <label for="student-name" class="block text-sm font-medium text-slate-200">Student name</label>
+                        <label for="student-name" class="block text-sm font-medium text-slate-200">Student name <i class="fa-chisel fa-regular fa-duck"></i></label>
                         <input type="text" name="student-name" id="student-name" required
                                placeholder="Jordan Rivera"
                                class="mt-2 w-full rounded-xl border border-white/10 bg-slate-950/60 px-4 py-3 text-sm text-white placeholder:text-slate-500 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
                     </div>
 
                     <div>
-                        <label for="email" class="block text-sm font-medium text-slate-200">Email</label>
+                        <label for="email" class="block text-sm font-medium text-slate-200">Email <i class="fa-regular fa-id-badge"></i> </label>
                         <input type="email" name="email" id="email" required
                                placeholder="jordan@school.edu"
                                class="mt-2 w-full rounded-xl border border-white/10 bg-slate-950/60 px-4 py-3 text-sm text-white placeholder:text-slate-500 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
@@ -69,7 +70,7 @@
                             </select>
                         </div>
                         <div>
-                            <label for="year" class="block text-sm font-medium text-slate-200">Year</label>
+                            <label for="year" class="block text-sm font-medium text-slate-200">Year <i class="fa-slab fa-regular fa-calendar"></i> </label>
                             <select name="year" id="year" required
                                     class="mt-2 w-full rounded-xl border border-white/10 bg-slate-950/60 px-4 py-3 text-sm text-white focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
                                 <option value="">Select a year</option>
@@ -82,15 +83,15 @@
                     </div>
 
                     <div>
-                        <label for="message" class="block text-sm font-medium text-slate-200">Message</label>
-                        <textarea name="message" id="message" rows="4" required
+                        <label for="message" class="block text-sm font-medium text-slate-200">Message <i class="fa-slab fa-regular fa-question"></i> </label>
+                        <textarea name="message" id="message" rows="4"
                                   placeholder="Let us know if you have accessibility needs or questions."
                                   class="mt-2 w-full rounded-xl border border-white/10 bg-slate-950/60 px-4 py-3 text-sm text-white placeholder:text-slate-500 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/40"></textarea>
                     </div>
 
                     <button type="submit"
                             class="w-full rounded-xl bg-blue-500 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-500/30 transition hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-300/60">
-                        Register
+                        Register <i class="fa-slab fa-regular fa-paper-plane"></i>
                     </button>
                 </div>
             </form>
