@@ -133,4 +133,23 @@ LEFT JOIN user_requests ON events.id = user_requests.event_id AND user_requests.
             return false;
         }
     }
+
+    public function createUser()
+    {
+        try {
+
+            if( $this->hasUser() || $this->isUserDeleted() ) return false;
+
+            $sql = "INSERT INTO users (name, year, email) VALUES (:name, :year, :email)";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(':name', $this->name);
+            $stmt->bindParam(':year', $this->year);
+            $stmt->bindParam(':email', $this->email);
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            $this->error = 'Failed to create user: ' . $e->getMessage();
+            return false;
+        }
+    }
+
 }
