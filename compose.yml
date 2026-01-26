@@ -1,4 +1,26 @@
 services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: foxday_container
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      DB_HOST: db
+      DB_NAME: foxday
+      DB_USER: admin
+      DB_PASS: admin
+    volumes:
+      - .:/usr/src/myapp
+      - ./config:/etc/php/conf.d
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - app-network
+
   db:
     image: mysql:8.0
     container_name: mysql_db_2
