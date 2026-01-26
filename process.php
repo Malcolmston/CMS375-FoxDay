@@ -9,6 +9,7 @@ $errors = [];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $evt = Event::initEvent($_POST['event']);
 
+    // php $_POST sanitization for name, email, event, year, message
     $name = filter_input(INPUT_POST, 'student-name', FILTER_SANITIZE_STRING);
     $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
     $event = filter_input(INPUT_POST, 'event', FILTER_VALIDATE_INT);
