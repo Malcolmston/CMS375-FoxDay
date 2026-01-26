@@ -7,10 +7,14 @@ class Event extends Connect
     private $date;
     private $description;
 
-    public function __construct()
+    public function __construct($title, $date, $description = null)
     {
         parent::__construct();
         $this->initEvents();
+        
+        $this->title = $title;
+        $this->date = $date;
+        $this->description = $description;
     }
 
     public function getEvent($id)
@@ -19,16 +23,24 @@ class Event extends Connect
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':id', $id);
         $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC);
-    }
+        $data = $stmt->fetch(PDO::FETCH_ASSOC);
 
+        if ($data) {
+            $e =  new Event($data['title'], $data['date'], $data['description']);
+            $e->id = $data['id'];
+
+            return $e;
+        }
+
+        return null;
+    }
     public function hasEvent($title)
     {
         $sql = "SELECT COUNT(*) FROM events WHERE title = :title";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':title', $title);
         $stmt->execute();
-        return $stmt->fetchColumn() > 0;
+        return (bool) $stmt->fetchColumn();
     }
 
     public function getEvents()
@@ -36,10 +48,28 @@ class Event extends Connect
         $sql = "SELECT * FROM events";
         $stmt = $this->db->prepare($sql);
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+        $events = [];
+        foreach ($rows as $row) {
+            $event = new Event($row['title'], $row['date'], $row['description']);
+            $event->id = $row['id'];
+            $events[] = $event;
+        }
+
+        return $events;
     }
 
+    public function updateEvent($id, $title, $date, $description)
+    {
+        $sql = "UPDATE events SET title = :title, date = :date, description = :description WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':title', $title);
+        $stmt->bindParam(':date', $date);
+        $stmt->bindParam(':description', $description);
+        return $stmt->execute();
+    }
     public function addEvent($title, $date, $description)
     {
         try {
@@ -55,11 +85,6 @@ class Event extends Connect
             $this->error = 'Failed to add event: ' . $e->getMessage();
             return false;
         }
-    }
-
-    public function exsist()
-    {
-
     }
 
     private function initEvents()
