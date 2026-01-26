@@ -38,6 +38,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if(!$errors) {
         $user = new User($name, $year, $email);
 
+        if( !$user->createUser() ) {
+            $errors[] = $user->getError();
+        }
 
         $user->addEvent($evt);
     }
@@ -49,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php if($errors): ?>
             <ul>
                 <?php foreach($errors as $error): ?>
-                    <li><?php echo htmlspecialchars($error); ?></li>
+                    <li><?php echo htmlspecialchars($error, ENT_QUOTES, 'UTF-8'); ?></li>
                 <?php endforeach; ?>
             </ul>
         <?php endif; ?>
