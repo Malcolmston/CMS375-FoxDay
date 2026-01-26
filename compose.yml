@@ -1,8 +1,6 @@
 services:
   app:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: ghcr.io/malcolmston/foxday:latest
     container_name: foxday_container
     restart: unless-stopped
     ports:
