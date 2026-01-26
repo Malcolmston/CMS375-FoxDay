@@ -10,6 +10,16 @@ class Event extends Connect
     private $date;
     private $description;
 
+    /**
+     * Reads and parses events data from a file.
+     *
+     * This method retrieves event data from a JSON file, decodes the data into an array,
+     * and ensures that the date format for each event is standardized.
+     *
+     * @return array An array of events with standardized date format. Returns an empty array if no valid data is found.
+     * @global string $EVENTS The global variable containing the path to the events file.
+     *
+     */
     private static function getEventsFromFile()
     {
         global $EVENTS;
