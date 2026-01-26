@@ -25,7 +25,7 @@ services:
     image: mysql:8.0
     container_name: mysql_db_2
     restart: unless-stopped
-    command: --log-bin-trust-function-creators=1 --lower-case-table-names=1
+    command: --log-bin-trust-function-creators=1 --lower-case-table-names=1 --default-authentication-plugin=mysql_native_password
     environment:
       MYSQL_ROOT_HOST: "%"
       MYSQL_ROOT_PASSWORD: admin
@@ -35,7 +35,7 @@ services:
     ports:
       - "13308:3306"
     volumes:
-      - db_data:/var/lib/mysql  # Use named volume instead
+      - db_data_v2:/var/lib/mysql
     networks:
       - app-network
     healthcheck:
@@ -63,7 +63,7 @@ services:
       - app-network
 
 volumes:
-  db_data:
+  db_data_v2:
     driver: local
 
 networks:
