@@ -53,4 +53,12 @@ class User extends Connect
         $deletedAt = $stmt->fetchColumn();
         return $deletedAt !== null;
     }
+
+    public function deleteUser()
+    {
+        $sql = "UPDATE users SET deletedAt = CURRENT_TIMESTAMP WHERE email = :email";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':email', $this->email);
+        $stmt->execute();
+    }
 }
