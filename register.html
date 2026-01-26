@@ -6,5 +6,40 @@
 </head>
 <body>
 
+
+<form action="process.php" method="post">
+    <label for="student-name">Student name</label>
+    <input type="text" name="student-name" id="student-name" required>
+
+    <label for="email">Email</label>
+    <input type="email" name="email" id="email" required>
+
+    <label for="event">Event</label>
+    <select name="event" id="event" required>
+        <option value="">Select an event</option>
+        <option value="1">Fox Day</option>
+        <option value="2">Fox Day 2</option>
+        <option value="3">Fox Day 3</option>
+        <option value="4">Fox Day 4</option>
+    </select>
+
+    <label for="year">Year</label>
+
+    <select name="year" id="year" required>
+        <option value="">Select a year</option>
+        <option value="freshman">1</option>
+        <option value="sophmore">2</option>
+        <option value="junior">3</option>
+        <option value="senior">4</option>
+    </select>
+
+    <label for="message">Message</label>
+    <textarea name="message" id="message" required></textarea>
+
+
+    <input type="submit" value="Register">
+
+</form>
+
 </body>
 </html>
