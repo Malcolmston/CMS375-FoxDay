@@ -9,6 +9,21 @@ class Event extends Connect
     private $date;
     private $description;
 
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
     public function __construct($title = null, $date = null, $description = null)
     {
         parent::__construct();
