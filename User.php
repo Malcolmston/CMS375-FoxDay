@@ -36,9 +36,23 @@ class User extends Connect
         return null;
     }
 
-    public function hasUser()
+    /**
+     * Checks if a user exists in the database based on the provided email.
+     * If the parameter `$p` is true, the method checks for any record matching the email regardless of the deletion state.
+     * Otherwise, it checks only for active records (where `deletedAt` is null).
+     *
+     * @param bool $p Indicates whether to include deleted users in the search. Defaults to false.
+     * @return bool Returns true if a matching user record is found, otherwise false.
+     */
+    public function hasUser($p = false)
     {
-        $sql = "SELECT COUNT(*) FROM users WHERE email = :email AND deletedAt IS NULL";
+
+        if ($p) {
+            $sql = "SELECT COUNT(*) FROM users WHERE email = :email";
+        } else {
+            $sql = "SELECT COUNT(*) FROM users WHERE email = :email AND deletedAt IS NULL";
+        }
+
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':email', $this->email);
         $stmt->execute();
@@ -53,7 +67,7 @@ class User extends Connect
         $stmt->bindParam(':email', $this->email);
         $stmt->execute();
         $deletedAt = $stmt->fetchColumn();
-        return $deletedAt !== null;
+        return $deletedAt !== null && $this->hasUser(true);
     }
 
     public function deleteUser()
