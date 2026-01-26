@@ -6,8 +6,12 @@ class Connect
     public $error;
     public function __construct()
     {
+        $host = getenv('DB_HOST') ?: 'localhost';
+        $dbName = getenv('DB_NAME') ?: 'foxday';
+        $user = getenv('DB_USER') ?: 'admin';
+        $pass = getenv('DB_PASS') ?: 'admin';
         try {
-            $this->db = new PDO('mysql:host=localhost;dbname=foxday', 'admin', 'admin');
+            $this->db = new PDO("mysql:host={$host};dbname={$dbName}", $user, $pass);
             $this->createEventTable()->createUserTable()->createUserReq()->createUserReq();
         } catch (PDOException $e) {
             $this->error = 'Database connection failed: ' . $e->getMessage();
