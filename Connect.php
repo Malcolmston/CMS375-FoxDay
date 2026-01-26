@@ -86,6 +86,39 @@ class Connect
         return $this->error;
     }
 
+    public function addEvent($title, $date, $description)
+    {
+        try {
+        $sql = "INSERT INTO events (title, date, description) VALUES (:title, :date, :description)";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':title', $title);
+        $stmt->bindParam(':date', $date);
+        $stmt->bindParam(':description', $description);
+        $stmt->execute();
+
+        return $this->db->lastInsertId();
+        } catch (PDOException $e) {
+            $this->error = 'Failed to add event: ' . $e->getMessage();
+            return false;
+        }
+    }
+
+    public function addUser($name, $year, $email)
+    {
+        try {
+            $sql = "INSERT INTO users (name, year, email) VALUES (:name, :year, :email)";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(':name', $name);
+            $stmt->bindParam(':year', $year);
+            $stmt->bindParam(':email', $email);
+            $stmt->execute();
+            return $this->db->lastInsertId();
+        } catch (PDOException $e) {
+            $this->error = 'Failed to add user: ' . $e->getMessage();
+            return false;
+        }
+    }
+
     public function __destruct()
     {
         $this->db = null;
