@@ -25,4 +25,3 @@ if ($error) {
 echo json_encode(['status' => 'success', 'latency' => $latency]);
 exit;
 ?>
-
