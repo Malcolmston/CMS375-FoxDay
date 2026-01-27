@@ -1,0 +1,5 @@
+{
+    "require": {
+        "spatie/ping": "^1.1"
+    }
+}
