@@ -13,10 +13,22 @@ services:
       DB_PASS: admin
     volumes:
       - .:/usr/src/myapp
+      - vendor_data:/usr/src/myapp/vendor
       - ./config:/etc/php/conf.d
     depends_on:
       db:
         condition: service_healthy
+    networks:
+      - app-network
+  
+  composer:
+    image: composer:2
+    container_name: foxday_composer
+    working_dir: /app
+    volumes:
+      - .:/app
+      - vendor_data:/app/vendor
+    command: install --no-dev --prefer-dist --no-interaction --no-progress
     networks:
       - app-network
 
@@ -63,6 +75,8 @@ services:
 
 volumes:
   db_data_v2:
+    driver: local
+  vendor_data:
     driver: local
 
 networks:
