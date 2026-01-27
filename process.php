@@ -6,6 +6,8 @@ require_once 'Connect.php';
 require_once 'Event.php';
 require_once 'User.php';
 
+$events = Event::getEvents();
+
 $name = $email = $event = $year = $message = '';
 $errors = [];
 
