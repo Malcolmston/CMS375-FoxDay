@@ -33,5 +33,32 @@
     </section>
 </main>
 
+<footer class="flex items-center justify-center gap-2">
+
+    <p class="text-center text-sm text-gray-500">&copy; 2023 Fox Day Campus Events. All rights reserved.</p>
+
+    <!-- dot for db status -->
+    <span class="h-3 w-3 rounded-full flex" id="db-status"></span>
+
+</footer>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const dbStatus = document.querySelector('#db-status');
+
+        dbStatus.classList.add('bg-yellow-500');
+
+        fetch('/status.php')
+            .then(response => response.json())
+            .then(data => {
+               data["db"].status === "fail" ? dbStatus.classList.add('bg-red-500') : data["db"].status === "success" ? dbStatus.classList.add('bg-green-500') : dbStatus.classList.add('bg-yellow-500')
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                dbStatus.classList.add('bg-red-500');
+            });
+
+    });
+</script>
+
 </body>
 </html>
