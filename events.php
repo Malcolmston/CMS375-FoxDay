@@ -2,8 +2,9 @@
 error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
 ini_set('display_errors', 0);
 
-
+require_once 'Connect.php';
 require_once 'Event.php';
+require_once 'User.php';
 
 $events = Event::getEvents();
 ?>

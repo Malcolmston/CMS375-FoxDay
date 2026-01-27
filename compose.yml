@@ -1,6 +1,7 @@
 services:
   app:
     image: ghcr.io/malcolmston/foxday:latest
+    platform: linux/amd64
     container_name: foxday_container
     restart: unless-stopped
     ports:
