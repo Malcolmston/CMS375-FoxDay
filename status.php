@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . '/vendor/autoload.php';
+
 use Spatie\Ping\PingDestination;
 
 $mysql = PingDestination::create("127.0.0.1:3306");
