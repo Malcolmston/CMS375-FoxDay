@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/2333bf7b7a.js" crossorigin="anonymous"></script>
-    <script src="talwind.config.js"></script>
+    <script src="tailwind.config.js"></script>
 </head>
 <body class="font-display">
 <div class="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 text-slate-100">
@@ -62,11 +62,7 @@
                             <label for="event" class="block text-sm font-medium text-slate-200">Event</label>
                             <select name="event" id="event" required
                                     class="mt-2 w-full rounded-xl border border-white/10 bg-slate-950/60 px-4 py-3 text-sm text-white focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400/40">
-                                <option value="">Select an event</option>
-                                <option value="1">Fox Day</option>
-                                <option value="2">Fox Day 2</option>
-                                <option value="3">Fox Day 3</option>
-                                <option value="4">Fox Day 4</option>
+
                             </select>
                         </div>
                         <div>
@@ -98,5 +94,38 @@
         </section>
     </div>
 </div>
+
+<script>
+    async function getEvents() {
+        try {
+            const response = await fetch('/load.php');
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const events = document.querySelector("#event");
+
+        getEvents().then(data => {
+            events.innerHTML = "";
+
+            const option = document.createElement("option");
+            option.value = "";
+            option.textContent = "Select an event";
+            events.appendChild(option);
+
+            data.forEach(event => {
+                const option = document.createElement("option");
+                option.value = event.id;
+                option.textContent = event.name;
+                events.appendChild(option);
+            });
+        }).catch(error => console.error('Error populating events:', error));
+    });
+</script>
+
 </body>
 </html>
