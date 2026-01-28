@@ -1,7 +1,7 @@
 <?php
 require_once 'Connect.php';
 
-$EVENTS = __DIR__ . "events.json";
+$EVENTS = __DIR__ . "/events.json";
 
 class Event extends Connect
 {
