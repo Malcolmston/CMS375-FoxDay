@@ -1,5 +1,6 @@
 {
     "require": {
-        "spatie/ping": "^1.1"
+        "spatie/ping": "^1.1",
+      "ext-json": "*"
     }
 }

@@ -1,7 +1,7 @@
 <?php
 require_once 'Connect.php';
 
-$EVENTS = "events.json";
+$EVENTS = __DIR__ . "/events.json";
 
 class Event extends Connect
 {
@@ -20,7 +20,7 @@ class Event extends Connect
      * @global string $EVENTS The global variable containing the path to the events file.
      *
      */
-    private static function getEventsFromFile()
+    private static function getEventsFromFile(): array
     {
         global $EVENTS;
         $events = json_decode(file_get_contents($EVENTS), true);
@@ -158,7 +158,7 @@ class Event extends Connect
         if (!$db) {
             return [];
         }
-        $sql = "SELECT * FROM events";
+        $sql = "SELECT * FROM events ORDER BY date ASC";
         $stmt = $db->prepare($sql);
         $stmt->execute();
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
