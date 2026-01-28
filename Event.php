@@ -158,7 +158,7 @@ class Event extends Connect
         if (!$db) {
             return [];
         }
-        $sql = "SELECT * FROM events";
+        $sql = "SELECT * FROM events ORDER BY date ASC";
         $stmt = $db->prepare($sql);
         $stmt->execute();
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
