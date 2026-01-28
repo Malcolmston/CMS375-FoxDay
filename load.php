@@ -18,3 +18,4 @@ $response = array_map(function($event) {
 }, $events);
 
 echo json_encode($response);
+?>
