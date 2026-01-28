@@ -170,7 +170,7 @@
 </footer>
 <script>
     function getEvents() {
-        fetch('/events.php').then(response => response.json()).then(data => console.log(data)).catch(error => console.error('Error:', error));
+        fetch('/load.php').then(response => response.json()).then(data => console.log(data)).catch(error => console.error('Error:', error));
     }
 
     document.addEventListener('DOMContentLoaded', () => {
