@@ -20,7 +20,7 @@ class Event extends Connect
      * @global string $EVENTS The global variable containing the path to the events file.
      *
      */
-    private static function getEventsFromFile()
+    private static function getEventsFromFile(): array
     {
         global $EVENTS;
         $events = json_decode(file_get_contents($EVENTS), true);
