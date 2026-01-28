@@ -169,7 +169,14 @@
     </div>
 </footer>
 <script>
+    function getEvents() {
+        fetch('/events.php').then(response => response.json()).then(data => console.log(data)).catch(error => console.error('Error:', error));
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
+        getEvents();
+
+
         const dbStatus = document.querySelector('#db-status');
 
         dbStatus.classList.add('bg-yellow-500');
